@@ -1,0 +1,3 @@
+- Open Qt creator
+- Click "Open project"
+- Select "dsproj.pro"
