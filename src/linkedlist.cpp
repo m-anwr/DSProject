@@ -5,35 +5,71 @@ linkedList::linkedList()
 {
 	head = 0;
 }
-Node* linkedList::getHead()
+bool linkedList::isEmpty()
+{   if (head ==0) return true;
+    else          return false;
+}
+
+Node* linkedList::get_head()
 {
 	return head;
 }
-bool linkedList::isEmpty()
+Node* linkedList::get_tail()
 {
-	if (head == 0)
-		return true;
-	return false;
+    Node* temp = head;
+    while (temp->next!=0)
+    {
+        temp= temp->next;
+    }
+    return temp;
 }
-void linkedList::Add(Requirement item)
-{
-	if (isEmpty())
-	{
-		Node* nw = new Node(item);
-		nw->next = head;
-		head = nw;
 
-	}
-	else
-	{
-		Node* tmp = head;
-		while (tmp->get_next() != 0)
-		{
-			tmp = tmp->get_next();
-		}
-		Node* nw = new Node(item);
-		tmp->set_next(nw);
-	}
+void linkedList::add_front(Requirement item)
+{
+    Node* nw = new Node (item);
+    nw->next = head;
+    head = nw;
+}
+void linkedList::add_end(Requirement item)
+{
+    if (isEmpty())
+    {
+        add_front(item);
+    }
+    else
+    {
+        Node* temp = head;
+        while (temp->next!=0)
+        {
+            temp = temp->next ;
+        }
+        Node* nw = new Node (item);
+       temp->next=nw;
+    }
+
+}
+void linkedList:: remove_front ()
+{
+    if (isEmpty())
+    {return;}
+    else
+    {
+    Node* temp = head;
+    head = head->get_next();
+    delete temp;
+    }
+}
+int linkedList:: get_size()
+{
+
+    int count_ = 0;
+    Node* temp =head;
+    while (temp !=0)
+    {
+        count_++;
+        temp= temp->next;
+    }
+    return count_;
 }
 void linkedList:: printAll() // not complete > wait the require class
 {

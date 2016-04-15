@@ -9,10 +9,14 @@ private:
 
 public:
 	linkedList();
-	Node* getHead();
-	bool isEmpty();
-	void Add(Requirement item);
+	Node* get_head();
+	Node* get_tail();
+	void add_front(Requirement item);
+	void add_end (Requirement item);
+	void remove_front();
 	void printAll();
+	bool isEmpty();
+	int get_size();
 
 };
 #endif
