@@ -1,6 +1,6 @@
 #include "Node.h"
-Node::                  Node(Requirement r){require = r; next = nullptr;}
-void Node::             setData(Requirement r)   { require = r; }
+Node::                  Node(Requirement r){require = r; next = 0;}
+void Node::             set_data(Requirement r)   { require = r; }
 Requirement Node::      get_data()               { return require; }
-void Node::             set_next(node* n)        { next = r; }
+void Node::             set_next(Node* r)        { next= r; }
 Node* Node::            get_next()               { return next; }

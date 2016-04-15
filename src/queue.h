@@ -1,5 +1,6 @@
 #ifndef queue_q
 #define queue_q
+#include "linkedlist.h"
 class Queue : public linkedList
 {
 private :
