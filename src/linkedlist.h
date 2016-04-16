@@ -9,14 +9,14 @@ private:
 
 public:
 	linkedList();
-	Node* get_head();
-	Node* get_tail();
-	void add_front(Requirement item);
-	void add_end (Requirement item);
-	void remove_front();
+	Node* getHead();
+	Node* getTail();
+	void addFront(Requirement item);
+	void addEnd (Requirement item);
+	void removeFront();
 	void printAll();
 	bool isEmpty();
-	int get_size();
+	int getSize();
 
 };
 #endif

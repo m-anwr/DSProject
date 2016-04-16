@@ -9,8 +9,8 @@ public :
     Queue( );
     void enqueue(Requirement item);
     Requirement dequeue( );
-    Requirement get_data_of_head( );
-    Requirement get_data_of_tail( );
+    Requirement getDataOfHead( );
+    Requirement getDataOfTail( );
 
 
 };

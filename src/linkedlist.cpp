@@ -10,11 +10,11 @@ bool linkedList::isEmpty()
     else          return false;
 }
 
-Node* linkedList::get_head()
+Node* linkedList::getHead()
 {
 	return head;
 }
-Node* linkedList::get_tail()
+Node* linkedList::getTail()
 {
     Node* temp = head;
     while (temp->next!=0)
@@ -24,17 +24,17 @@ Node* linkedList::get_tail()
     return temp;
 }
 
-void linkedList::add_front(Requirement item)
+void linkedList::addFront(Requirement item)
 {
     Node* nw = new Node (item);
     nw->next = head;
     head = nw;
 }
-void linkedList::add_end(Requirement item)
+void linkedList::addEnd(Requirement item)
 {
     if (isEmpty())
     {
-        add_front(item);
+        addFront(item);
     }
     else
     {
@@ -48,18 +48,18 @@ void linkedList::add_end(Requirement item)
     }
 
 }
-void linkedList:: remove_front ()
+void linkedList:: removeFront ()
 {
     if (isEmpty())
     {return;}
     else
     {
     Node* temp = head;
-    head = head->get_next();
+    head = head->getNext();
     delete temp;
     }
 }
-int linkedList:: get_size()
+int linkedList:: getSize()
 {
 
     int count_ = 0;
@@ -77,7 +77,7 @@ void linkedList:: printAll() // not complete > wait the require class
 	while (tmp != 0)
 	{
 	// cout << tmp->proc.get_require() <<endl;
-	tmp = tmp->get_next();
+	tmp = tmp->getNext();
 	}
 }
 

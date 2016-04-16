@@ -2,7 +2,7 @@
 Queue::Queue() {;}
 void Queue::enqueue(Requirement item)
 {
-    add_end(item);
+    addEnd(item);
 }
 Requirement Queue::dequeue()
 {
@@ -10,23 +10,23 @@ Requirement Queue::dequeue()
     {;}//return NULL;}// not complete as the code blocks don't support the NULL
     else
     {
-        Requirement temp = get_data_of_head();
-        remove_front();
+        Requirement temp = getDataOfHead();
+        removeFront();
         return temp;
     }
 }
-Requirement Queue:: get_data_of_head()
+Requirement Queue:: getDataOfHead()
 {
     if (isEmpty())
         {;}//return NULL;}//NOT COMPLETE
     else
-        {return get_head()->get_data();}
+        {return getHead()->getData();}
 }
-Requirement Queue::get_data_of_tail()
+Requirement Queue::getDataOfTail()
 {
     if (isEmpty())
         {;}//return NULL;}
     else
-        {return get_tail()->get_data();}
+        {return getTail()->getData();}
 }
 

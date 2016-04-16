@@ -10,10 +10,10 @@ private:
 
 public:
 	Node(Requirement r);
-	void set_data(Requirement r);
-	Requirement get_data();
-	void set_next(Node* n);
-	Node* get_next();
+	void setData(Requirement r);
+	Requirement getData();
+	void setNext(Node* n);
+	Node* getNext();
 	friend class linkedList;
 
 
