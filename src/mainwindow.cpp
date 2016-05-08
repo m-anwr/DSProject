@@ -4,8 +4,9 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QTextStream>
+#include <QSet>
 #include "ui_mainwindow.h"
-
+#include "request.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -83,6 +84,7 @@ void MainWindow::on_selectSimFileBtn_clicked()
 
 void MainWindow::on_startSimBtn_clicked()
 {
+    QSet<Request> RequestsIn;
     QString simFilePath = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::home().absolutePath(), tr("Elevator Sim (*.elv)"));
     if(!simFilePath.isEmpty())
     {
@@ -90,7 +92,7 @@ void MainWindow::on_startSimBtn_clicked()
         f.open(QIODevice::ReadOnly | QIODevice::Text);
 
         QTextStream in(&f);
-        int temp;
+        int temp, tempTime, tempFrom, tempTo;
         in >> temp;
         ui->elvInitialFloor->setValue(temp);
         in >> temp;
@@ -98,6 +100,8 @@ void MainWindow::on_startSimBtn_clicked()
         while(!in.atEnd())
         {
             //read another request and push to container
+            in >> tempTime >> tempFrom >> tempTo;
+            RequestsIn.insert(Request(tempTime, tempFrom, tempTo));
         }
         f.close();
     }

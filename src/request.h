@@ -1,6 +1,6 @@
 #ifndef REQUEST_H
 #define REQUEST_H
-
+#include <QHash>
 
 class Request
 {
@@ -19,5 +19,6 @@ private:
     int from;
     int to;
 };
-
+int qHash(const Request &r);
+bool operator ==(const Request,const Request &req);
 #endif // REQUEST_H
