@@ -21,6 +21,8 @@ private slots:
 
     void on_selectSimFileBtn_clicked();
 
+    void on_startSimBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -80,3 +80,25 @@ void MainWindow::on_selectSimFileBtn_clicked()
         ui->simFilePath->setText(simFilePath);
     }
 }
+
+void MainWindow::on_startSimBtn_clicked()
+{
+    QString simFilePath = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::home().absolutePath(), tr("Elevator Sim (*.elv)"));
+    if(!simFilePath.isEmpty())
+    {
+        QFile f(simFilePath);
+        f.open(QIODevice::ReadOnly | QIODevice::Text);
+
+        QTextStream in(&f);
+        int temp;
+        in >> temp;
+        ui->elvInitialFloor->setValue(temp);
+        in >> temp;
+        ui->elvTransitionTime->setValue(temp);
+        while(!in.atEnd())
+        {
+            //read another request and push to container
+        }
+        f.close();
+    }
+}

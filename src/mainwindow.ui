@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>484</width>
-    <height>470</height>
+    <height>511</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="file_creator">
        <attribute name="title">
@@ -200,7 +200,7 @@
      <x>0</x>
      <y>0</y>
      <width>484</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
