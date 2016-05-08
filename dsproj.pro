@@ -12,8 +12,10 @@ TARGET = dsproj
 TEMPLATE = app
 
 SOURCES += src/main.cpp \
-           src/mainwindow.cpp
+           src/mainwindow.cpp \
+    src/request.cpp
 
-HEADERS  += src/mainwindow.h
+HEADERS  += src/mainwindow.h \
+    src/request.h
 
 FORMS    += src/mainwindow.ui

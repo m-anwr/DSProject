@@ -15,6 +15,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_addRequestBtn_clicked();
+    void on_createSimFileBtn_clicked();
+
+    void on_selectSimFileBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
