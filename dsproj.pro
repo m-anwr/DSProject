@@ -13,9 +13,13 @@ TEMPLATE = app
 
 SOURCES += src/main.cpp \
            src/mainwindow.cpp \
-    src/request.cpp
+    src/request.cpp \
+    src/elevator.cpp \
+    src/pair.cpp
 
 HEADERS  += src/mainwindow.h \
-    src/request.h
+    src/request.h \
+    src/elevator.h \
+    src/pair.h
 
 FORMS    += src/mainwindow.ui

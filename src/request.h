@@ -5,9 +5,21 @@
 class Request
 {
 public:
-    Request();
+    Request(int time_, int from_, int to_);
 
-    //Operator== should be overloaded to check for equal requests and remove duplicates
+    int getTime();
+    int getFrom();
+    int getTo();
+    int getDirection();
+    bool getState();
+    void setState(bool s);
+    bool operator ==(Request &req);
+
+private:
+    int time;
+    int from;
+    int to;
+    bool state;
 };
 
 #endif // REQUEST_H
