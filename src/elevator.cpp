@@ -3,6 +3,13 @@
 Elevator::Elevator()
 {
     floorsNo = 5;
+    initialFloor = 0;
+}
+
+Elevator::Elevator(int x)
+{
+    floorsNo = 5;
+    initialFloor = x;
 }
 
 Elevator::~Elevator()
@@ -50,7 +57,7 @@ void Elevator::set(Request r)
 QQueue<pair> Elevator::simulate()
 {
     int realTime = 0; //to simulate real time
-    int floor = 0; //whick floor the elevator is on
+    int floor = initialFloor; //whick floor the elevator is on
     int upServed = 0; //indicating that all up requests are served
     int downServed = 0;//indicating that all down requests are served
     QQueue<pair> sim1; //holds up requests before changing direction

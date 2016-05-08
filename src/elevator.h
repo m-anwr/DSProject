@@ -12,6 +12,7 @@ class Elevator
 {
 public:
     Elevator();
+    Elevator(int x);
     ~Elevator();
     void set(Request r);
     void setFloors(int f){floorsNo = f;}
@@ -21,7 +22,7 @@ private:
     QQueue<Request> upQ;
     QQueue<Request> downQ;
     QQueue<pair> sim;
-    int floorsNo,time;
+    int floorsNo,time,initialFloor;
 
 private:
     void enQPair(QQueue<pair> &Q, pair r);
