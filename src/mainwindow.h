@@ -2,7 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QtCore>
+#include <QtGui>
+#include <QGraphicsScene>
 namespace Ui {
 class MainWindow;
 }
@@ -22,9 +24,10 @@ private slots:
     void on_selectSimFileBtn_clicked();
 
     void on_startSimBtn_clicked();
-
+    void drawBuilding ();
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *scene;
 };
 
 #endif // MAINWINDOW_H

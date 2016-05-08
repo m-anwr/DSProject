@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->reqTable->setHorizontalHeaderItem(0, new QTableWidgetItem("At"));
     ui->reqTable->setHorizontalHeaderItem(1, new QTableWidgetItem("From"));
     ui->reqTable->setHorizontalHeaderItem(2, new QTableWidgetItem("To"));
+    scene = new QGraphicsScene(this);
+    ui->graphicsView->setScene(scene);
 }
 
 MainWindow::~MainWindow()
@@ -101,4 +103,9 @@ void MainWindow::on_startSimBtn_clicked()
         }
         f.close();
     }
+    scene = new QGraphicsScene(this);
+}
+void MainWindow::drawBuilding()
+{
+
 }
