@@ -82,6 +82,8 @@ QQueue<pair> Elevator::simulate()
                     if(upQ[i].getFrom()>=floor)
                     {
                         //add both floors with their times in order
+                        qDebug()<<upQ[i].getFrom()<<realTime+(upQ[i].getFrom()-floor);
+                        qDebug()<<upQ[i].getTo()<<realTime+(upQ[i].getTo()-upQ[i].getFrom())+(upQ[i].getFrom()-floor);
                         pair p1(upQ[i].getFrom(),realTime+(upQ[i].getFrom()-floor));
                         pair p2(upQ[i].getTo(),realTime+(upQ[i].getTo()-upQ[i].getFrom())+(upQ[i].getFrom()-floor));
                         enQPair(sim1,p1);
@@ -92,7 +94,11 @@ QQueue<pair> Elevator::simulate()
                 }
             }
             //set last floor as the last served floor before changing direction
-            if(!sim1.isEmpty()) floor = sim1[sim1.size()-1].getFloor();
+            if(!sim1.isEmpty())
+            {
+                floor = sim1[sim1.size()-1].getFloor();
+                realTime = sim1[sim1.size()-1].getTime();
+            }
         }
         //if the up queue is empty go to floor foor before starting to go down
         else
@@ -115,6 +121,8 @@ QQueue<pair> Elevator::simulate()
                     }
                     if(downQ[i].getFrom()<=floor)
                     {
+                        qDebug()<<downQ[i].getFrom()<<realTime+(-downQ[i].getFrom()+floor);
+                        qDebug()<<downQ[i].getTo()<<realTime+(downQ[i].getFrom()-downQ[i].getTo())+(-downQ[i].getFrom()+floor);
                         pair p1(downQ[i].getFrom(),realTime+(-downQ[i].getFrom()+floor));
                         pair p2(downQ[i].getTo(),realTime+(downQ[i].getFrom()-downQ[i].getTo())+(-downQ[i].getFrom()+floor));
                         enQPair(sim2,p1);
@@ -124,7 +132,11 @@ QQueue<pair> Elevator::simulate()
                     }
                 }
             }
-            if(!sim2.isEmpty()) floor = sim2[sim2.size()-1].getFloor();
+            if(!sim2.isEmpty())
+            {
+                floor = sim2[sim2.size()-1].getFloor();
+                realTime = sim2[sim2.size()-1].getTime();
+            }
         }
         else
         {
