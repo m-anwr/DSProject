@@ -13,6 +13,7 @@ public:
 
     bool operator ==(Request &req);
     //Operator== should be overloaded to check for equal requests and remove duplicates
+     Request &operator=(const Request &other);
 private:
     int time;
     int from;
