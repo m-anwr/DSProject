@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QTextStream>
+#include "ui_mainwindow.h"
 #include <QSet>
 #include <QDebug>
 

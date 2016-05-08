@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+//local includes
+#include "elevator.h"
+#include "request.h"
 
 namespace Ui {
 class MainWindow;
