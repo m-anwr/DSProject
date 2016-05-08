@@ -20,10 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->reqTable->setHorizontalHeaderItem(2, new QTableWidgetItem("To"));
 
     Request r1(0,3,4);
-    Request r2(0,1,2);
-    Request r3(0,0,4);
-    Request r4(0,2,0);
-    Request r5(0,4,0);
+    Request r2(5,1,2);
+    Request r3(3,0,4);
+    Request r4(2,2,0);
+    Request r5(10,4,0);
     Request r6(0,4,2);
 
 
@@ -31,15 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
     e.set(r1);
     e.set(r2);
     e.set(r3);
-    e.set(r3);
-    e.set(r3);
     e.set(r4);
     e.set(r5);
     e.set(r6);
-    e.set(r1);
-    e.set(r2);
-    e.set(r1);
-    e.set(r4);
 
     e.simulate();
 }

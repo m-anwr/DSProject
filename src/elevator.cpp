@@ -51,8 +51,10 @@ QQueue<pair> Elevator::simulate()
     int size;
     int upServed = 0;
     int downServed = 0;
+    QQueue<pair> sim1;
+    QQueue<pair> sim2;
 
-    while(upServed!=upQ.size() && downServed !=downQ.size())
+    while(upServed!=upQ.size() || downServed !=downQ.size())
     {
         if(upServed != upQ.size())
         {
@@ -69,16 +71,22 @@ QQueue<pair> Elevator::simulate()
                     }
                     if(upQ[i].getFrom()>=floor)
                     {
-                        sim.enqueue(pair(upQ[i].getFrom(),realTime));
-                        sim.enqueue(pair(upQ[i].getTo(),realTime+(upQ[i].getTo()-upQ[i].getFrom())));
+                        pair p1(upQ[i].getFrom(),realTime+(upQ[i].getFrom()-floor));
+                        pair p2(upQ[i].getTo(),realTime+(upQ[i].getTo()-upQ[i].getFrom())+(upQ[i].getFrom()-floor));
+                        enQPair(sim1,p1);
+                        enQPair(sim1,p2);
                         upQ[i].setState(true);
                         upServed++;
                     }
                 }
             }
+            if(!sim1.isEmpty()) floor = sim1[sim1.size()-1].getFloor();
         }
-        floor = sim[sim.size()-1].getFloor();
-        realTime = sim[sim.size()-1].getTime();
+        else
+        {
+            realTime += 4-floor;
+            floor=4;
+        }
         if(downServed!=downQ.size())
         {
             size = downQ.size();
@@ -94,19 +102,49 @@ QQueue<pair> Elevator::simulate()
                     }
                     if(downQ[i].getFrom()<=floor)
                     {
-                        sim.enqueue(pair(downQ[i].getFrom(),realTime));
-                        sim.enqueue(pair(downQ[i].getTo(),realTime+(upQ[i].getTo()-upQ[i].getFrom())));
+                        pair p1(downQ[i].getFrom(),realTime+(-downQ[i].getFrom()+floor));
+                        pair p2(downQ[i].getTo(),realTime+(downQ[i].getFrom()-downQ[i].getTo())+(-downQ[i].getFrom()+floor));
+                        enQPair(sim2,p1);
+                        enQPair(sim2,p2);
                         downQ[i].setState(true);
                         downServed++;
                     }
                 }
             }
+            if(!sim2.isEmpty()) floor = sim2[sim2.size()-1].getFloor();
         }
-        floor = sim[sim.size()-1].getFloor();
-        realTime = sim[sim.size()-1].getTime();
+        else
+        {
+            realTime += floor;
+            floor=0;
+        }
 
-        for(int i=0;i<sim.size();i++)
-        qDebug()<<sim[i].getFloor()<<sim[i].getTime();
+        for(int i=0;i<sim1.size();i++)
+            sim.enqueue(sim1[i]);
+        sim1.clear();
+
+        for(int i=0;i<sim2.size();i++)
+            sim.enqueue(sim2[i]);
+        sim2.clear();
     }
+
+    for(int i=0;i<sim.size();i++)
+        qDebug()<<sim[i].getFloor()<<sim[i].getTime();
     return sim;
+}
+
+void Elevator::enQPair(QQueue<pair> &Q, pair r)
+{
+    bool repeated = false;
+    for(int i=0;i<Q.size();i++)
+    {if(r == Q[i]){repeated = true; break;}}
+
+    for(int i = 0 ; i < Q.count() ; ++i ) {
+        if(repeated) return;
+        if( r.getTime() < Q[i].getTime())  {
+            Q.insert(i,r);
+            return;
+        }
+    }
+    Q.enqueue(r);
 }

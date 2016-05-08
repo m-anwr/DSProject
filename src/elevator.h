@@ -22,6 +22,9 @@ private:
     QQueue<Request> downQ;
     QQueue<pair> sim;
     int floorsNo,time;
+
+private:
+    void enQPair(QQueue<pair> &Q, pair r);
 };
 
 #endif // ELEVATOR_H
