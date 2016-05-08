@@ -15,44 +15,24 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     ui->reqTable->horizontalHeader()->setVisible(true);
     ui->reqTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->reqTable->setHorizontalHeaderItem(0, new QTableWidgetItem("At"));
     ui->reqTable->setHorizontalHeaderItem(1, new QTableWidgetItem("From"));
     ui->reqTable->setHorizontalHeaderItem(2, new QTableWidgetItem("To"));
-    scene = new QGraphicsScene(this);
+
+    scene = new Scene(ui->graphicsView);
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->setSceneRect(0, 0, 300, 450);
+    QTimer::singleShot(200, this, SLOT(showMaximized()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-void MainWindow::draw()
-{
-    scene->clear();
-    //int x=0,y =0,hh=500,w=300;
-    QBrush blue_brush(Qt::blue);
-    QBrush black_brush(Qt::black);
-    QBrush white_brush(Qt::white);
-    QPen pen(Qt::black);
-    QPen penw(Qt::white);
-    QBrush darkgrey_brush(Qt::darkGray);
-    QBrush dark_brush(Qt::gray);
-    pen.setWidth(0);
-    building = scene->addRect(0,0,300,500,pen,blue_brush);
-    buildtop1 = scene->addRect(50,-30,200,30,pen,dark_brush);
-    buildtop2 = scene->addRect(100,-50,100,20,pen,darkgrey_brush);
-    floor1 = scene->addRect(125,30,50,70,penw,white_brush);
-    floor2 = scene->addRect(125,130,50,70,penw,white_brush);
-    floor3 = scene->addRect(125,230,50,70,penw,white_brush);
-    floor4 = scene->addRect(125,330,50,70,penw,white_brush);
-    floor5 = scene->addRect(125,430,50,70,penw,white_brush);
 
-
-
-
-}
 void MainWindow::on_addRequestBtn_clicked()
 {
     int reqAt   = ui->reqAt->value();
@@ -70,7 +50,6 @@ void MainWindow::on_addRequestBtn_clicked()
     ui->reqTable->setItem(newRowindex, 0, new QTableWidgetItem(QString::number(reqAt)));
     ui->reqTable->setItem(newRowindex, 1, new QTableWidgetItem(QString::number(reqFrom)));
     ui->reqTable->setItem(newRowindex, 2, new QTableWidgetItem(QString::number(reqTo)));
-
 }
 
 
@@ -105,9 +84,6 @@ void MainWindow::on_createSimFileBtn_clicked()
 
 void MainWindow::on_startSimBtn_clicked()
 {
-
-
-
     QSet<Request> RequestsIn;
     QString simFilePath = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::home().absolutePath(), tr("Elevator Sim (*.elv)"));
     if(simFilePath.isEmpty()) return;
