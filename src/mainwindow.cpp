@@ -21,24 +21,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->reqTable->setHorizontalHeaderItem(0, new QTableWidgetItem("At"));
     ui->reqTable->setHorizontalHeaderItem(1, new QTableWidgetItem("From"));
     ui->reqTable->setHorizontalHeaderItem(2, new QTableWidgetItem("To"));
-
-    Request r1(0,3,4);
-    Request r2(5,1,2);
-    Request r3(3,0,4);
-    Request r4(2,2,0);
-    Request r5(10,4,0);
-    Request r6(0,4,2);
-
-
-    Elevator e;
-    e.set(r1);
-    e.set(r2);
-    e.set(r3);
-    e.set(r4);
-    e.set(r5);
-    e.set(r6);
-
-    e.simulate();
 }
 
 MainWindow::~MainWindow()
