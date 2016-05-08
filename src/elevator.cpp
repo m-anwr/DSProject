@@ -23,7 +23,7 @@ void Elevator::set(Request r)
         //inserting elements with priority
         for(int i = 0 ; i < upQ.count() ; ++i ) {
             if(repeated) return;
-            if( r.getTime() < upQ[i].getTime())  {
+            if( r.time() < upQ[i].time())  {
                 upQ.insert(i,r);
                 return;
             }
@@ -38,7 +38,7 @@ void Elevator::set(Request r)
 
         for(int i = 0 ; i < downQ.count() ; ++i ) {
             if(repeated) return;
-            if( r.getTime() < downQ[i].getTime())  {
+            if( r.time() < downQ[i].time())  {
                 downQ.insert(i,r);
                 return;
             }
@@ -71,7 +71,7 @@ QQueue<pair> Elevator::simulate()
                 if(!upQ[i].getState())
                 {
                     //it the request has not arrived yet
-                    while(upQ[i].getTime()>realTime)
+                    while(upQ[i].time()>realTime)
                     {
                         //increase time and floor
                         realTime++;
@@ -79,13 +79,13 @@ QQueue<pair> Elevator::simulate()
                         if(floor>floorsNo-1) floor = floorsNo-1; //if floors more than max stop
                     }
                     //if request has arrived
-                    if(upQ[i].getFrom()>=floor)
+                    if(upQ[i].from()>=floor)
                     {
                         //add both floors with their times in order
 //                        qDebug()<<upQ[i].getFrom()<<realTime+(upQ[i].getFrom()-floor);
 //                        qDebug()<<upQ[i].getTo()<<realTime+(upQ[i].getTo()-upQ[i].getFrom())+(upQ[i].getFrom()-floor);
-                        pair p1(upQ[i].getFrom(),realTime+(upQ[i].getFrom()-floor));
-                        pair p2(upQ[i].getTo(),realTime+(upQ[i].getTo()-upQ[i].getFrom())+(upQ[i].getFrom()-floor));
+                        pair p1(upQ[i].from(),realTime+(upQ[i].from()-floor));
+                        pair p2(upQ[i].to(),realTime+(upQ[i].to()-upQ[i].from())+(upQ[i].from()-floor));
                         enQPair(sim1,p1);
                         enQPair(sim1,p2);
                         upQ[i].setState(true); //served
@@ -113,18 +113,18 @@ QQueue<pair> Elevator::simulate()
             {
                 if(!downQ[i].getState())
                 {
-                    while(downQ[i].getTime()>realTime)
+                    while(downQ[i].time()>realTime)
                     {
                         realTime++;
                         floor--;
                         if(floor<0) floor = 0;
                     }
-                    if(downQ[i].getFrom()<=floor)
+                    if(downQ[i].from()<=floor)
                     {
 //                        qDebug()<<downQ[i].getFrom()<<realTime+(-downQ[i].getFrom()+floor);
 //                        qDebug()<<downQ[i].getTo()<<realTime+(downQ[i].getFrom()-downQ[i].getTo())+(-downQ[i].getFrom()+floor);
-                        pair p1(downQ[i].getFrom(),realTime+(-downQ[i].getFrom()+floor));
-                        pair p2(downQ[i].getTo(),realTime+(downQ[i].getFrom()-downQ[i].getTo())+(-downQ[i].getFrom()+floor));
+                        pair p1(downQ[i].from(),realTime+(-downQ[i].from()+floor));
+                        pair p2(downQ[i].to(),realTime+(downQ[i].from()-downQ[i].to())+(-downQ[i].from()+floor));
                         enQPair(sim2,p1);
                         enQPair(sim2,p2);
                         downQ[i].setState(true);

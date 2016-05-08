@@ -21,8 +21,7 @@ public:
 private slots:
     void on_addRequestBtn_clicked();
     void on_createSimFileBtn_clicked();
-
-    void on_selectSimFileBtn_clicked();
+    void on_startSimBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

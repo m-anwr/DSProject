@@ -1,31 +1,32 @@
 #include "request.h"
 
-Request::Request(int time_, int from_, int to_)
+
+Request::Request(int time, int from, int to)
 {
-    time = time_;
-    from = from_;
-    to = to_;
+    m_time = time;
+    m_from = from;
+    m_to = to;
     state = false;
 }
 
-int Request::getTime()
+int Request::time() const
 {
-    return time;
+    return m_time;
 }
 
-int Request::getFrom()
+int Request::from() const
 {
-    return from;
+    return m_from;
 }
 
-int Request::getTo()
+int Request::to() const
 {
-    return to;
+    return m_to;
 }
 
 int Request::getDirection()
 {
-    if(from < to) return 0;
+    if(m_from < m_to) return 0;
     else return 1;
 }
 
@@ -37,11 +38,6 @@ bool Request::getState()
 void Request::setState(bool s)
 {
     state = s;
-}
-
-bool Request::operator ==(Request &req)
-{
-    return ((this->getTime() == req.getTime()) && (this->getFrom() == req.getFrom()) && (this->getTo() == req.getTo()));
 }
 
 

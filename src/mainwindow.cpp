@@ -5,8 +5,11 @@
 #include <QFile>
 #include <QTextStream>
 #include "ui_mainwindow.h"
+#include <QSet>
 #include <QDebug>
 
+#include "ui_mainwindow.h"
+#include "request.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -91,11 +94,27 @@ void MainWindow::on_createSimFileBtn_clicked()
     f.close();
 }
 
-void MainWindow::on_selectSimFileBtn_clicked()
+void MainWindow::on_startSimBtn_clicked()
 {
+    QSet<Request> RequestsIn;
     QString simFilePath = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::home().absolutePath(), tr("Elevator Sim (*.elv)"));
-    if(!simFilePath.isEmpty())
+    if(simFilePath.isEmpty()) return;
+
+    QFile f(simFilePath);
+    f.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QTextStream in(&f);
+
+    int elvFloor, elvTransitionTime, tempTime, tempFrom, tempTo;
+
+    in >> elvFloor >> elvTransitionTime;
+
+    while(!in.atEnd())
     {
-        ui->simFilePath->setText(simFilePath);
+        in >> tempTime >> tempFrom >> tempTo;
+        RequestsIn.insert(Request(tempTime, tempFrom, tempTo));
     }
+    f.close();
+
+    // Send values and Request Set to elevator
 }
