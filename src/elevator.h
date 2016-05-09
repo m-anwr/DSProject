@@ -3,6 +3,7 @@
 
 #include <QQueue>
 #include <QDebug>
+#include <QSet>
 
 //local includes
 #include "request.h"
@@ -11,8 +12,8 @@
 class Elevator
 {
 public:
-    Elevator();
-    Elevator(int x);
+    Elevator(QSet<Request> set);
+    Elevator(QSet<Request> set,int x);
     ~Elevator();
     void set(Request r);
     void setFloors(int f){floorsNo = f;}
