@@ -7,6 +7,7 @@
 #include "ui_mainwindow.h"
 #include <QSet>
 #include <QDebug>
+#include <QGraphicsObject>
 
 #include "ui_mainwindow.h"
 #include "request.h"
@@ -16,27 +17,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     ui->reqTable->horizontalHeader()->setVisible(true);
     ui->reqTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->reqTable->setHorizontalHeaderItem(0, new QTableWidgetItem("At"));
     ui->reqTable->setHorizontalHeaderItem(1, new QTableWidgetItem("From"));
     ui->reqTable->setHorizontalHeaderItem(2, new QTableWidgetItem("To"));
 
-    QSet<Request> set;
-    Request r1(0, 1, 3);
-    Request r2(1 ,2 ,1);
-    Request r3(2 ,1 ,4);
-    Request r4(3 ,3 ,1);
-    Request r5(4 ,1 ,2);
-    set.insert(r1);
-    set.insert(r2);
-    set.insert(r3);
-    set.insert(r4);
-    set.insert(r5);
+    scene = new Scene(ui->graphicsView);
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setSceneRect(0, 0, 300, 450);
+    QTimer::singleShot(200, this, SLOT(showMaximized()));
+    simT = new QTimer(this);
+    simT->setInterval(1000);
 
-    Elevator e(set);
-    e.simulate();
-
+    connect(simT, SIGNAL(timeout()),
+            this, SLOT(moveElv()));
 }
 
 MainWindow::~MainWindow()
@@ -62,6 +58,7 @@ void MainWindow::on_addRequestBtn_clicked()
     ui->reqTable->setItem(newRowindex, 1, new QTableWidgetItem(QString::number(reqFrom)));
     ui->reqTable->setItem(newRowindex, 2, new QTableWidgetItem(QString::number(reqTo)));
 }
+
 
 void MainWindow::on_createSimFileBtn_clicked()
 {
@@ -115,4 +112,69 @@ void MainWindow::on_startSimBtn_clicked()
     f.close();
 
     // Send values and Request Set to elevator
+    ui->statusBar->showMessage("WAITING");
+    elvShape = new ElevatorShape(elvFloor);
+    scene->addItem(elvShape);
+    Elevator e = Elevator(RequestsIn, elvFloor);
+    simQue = e.simulate();
+    startSimTimer();
+}
+
+void MainWindow::moveElv()
+{
+    if(simQue.empty())
+    {
+        simT->stop();
+        return;
+    }
+    pair p = simQue.head();
+    if(p.getTime() == lastSec)
+    {
+        simQue.dequeue();
+        ui->statusBar->showMessage("WAITING");
+        return;
+    }
+
+    ui->statusBar->showMessage("MOVING");
+
+    elvShape->move(p.getFloor());
+    simQue.dequeue();
+    lastSec = p.getTime();
+}
+
+void MainWindow::startSimTimer()
+{
+    simT->start();
+}
+
+// ================================================================
+
+ElevatorShape::ElevatorShape(int intiFloor)
+    : QGraphicsObject(0)
+{
+    setZValue(100);
+    move(intiFloor);
+}
+
+ElevatorShape::~ElevatorShape()
+{
+}
+
+QRectF ElevatorShape::boundingRect() const
+{
+    return QRectF(0,0,50,70);
+}
+
+void ElevatorShape::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+    painter->setBrush(QColor(0,255,0,255));
+    painter->drawRect(0,0,50,70);
+}
+
+void ElevatorShape::move(int floor)
+{
+    qreal y= 430 - floor * 100;
+    setPos(125,y);
 }
