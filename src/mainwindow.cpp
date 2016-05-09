@@ -112,6 +112,7 @@ void MainWindow::on_startSimBtn_clicked()
     f.close();
 
     // Send values and Request Set to elevator
+    ui->statusBar->showMessage("WAITING");
     elvShape = new ElevatorShape(elvFloor);
     scene->addItem(elvShape);
     Elevator e = Elevator(RequestsIn, elvFloor);
@@ -130,11 +131,15 @@ void MainWindow::moveElv()
     if(p.getTime() == lastSec)
     {
         simQue.dequeue();
+        ui->statusBar->showMessage("WAITING");
         return;
     }
 
+    ui->statusBar->showMessage("MOVING");
+
     elvShape->move(p.getFloor());
     simQue.dequeue();
+    lastSec = p.getTime();
 }
 
 void MainWindow::startSimTimer()
@@ -162,6 +167,8 @@ QRectF ElevatorShape::boundingRect() const
 
 void ElevatorShape::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
     painter->setBrush(QColor(0,255,0,255));
     painter->drawRect(0,0,50,70);
 }
