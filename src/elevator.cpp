@@ -101,8 +101,6 @@ QQueue<pair> Elevator::simulate()
                     if(upQ[i].from()>=floor)
                     {
                         //add both floors with their times in order
-                        //                        qDebug()<<upQ[i].getFrom()<<realTime+(upQ[i].getFrom()-floor);
-                        //                        qDebug()<<upQ[i].getTo()<<realTime+(upQ[i].getTo()-upQ[i].getFrom())+(upQ[i].getFrom()-floor);
                         pair p1(upQ[i].from(),realTime+(upQ[i].from()-floor));
                         pair p2(upQ[i].to(),realTime+(upQ[i].to()-upQ[i].from())+(upQ[i].from()-floor));
                         enQPair(sim1,p1);
@@ -140,8 +138,6 @@ QQueue<pair> Elevator::simulate()
                     }
                     if(downQ[i].from()<=floor)
                     {
-                        //                        qDebug()<<downQ[i].getFrom()<<realTime+(-downQ[i].getFrom()+floor);
-                        //                        qDebug()<<downQ[i].getTo()<<realTime+(downQ[i].getFrom()-downQ[i].getTo())+(-downQ[i].getFrom()+floor);
                         pair p1(downQ[i].from(),realTime+(-downQ[i].from()+floor));
                         pair p2(downQ[i].to(),realTime+(downQ[i].from()-downQ[i].to())+(-downQ[i].from()+floor));
                         enQPair(sim2,p1);
@@ -173,10 +169,47 @@ QQueue<pair> Elevator::simulate()
         sim2.clear();
     }
 
+    QQueue<pair> draw;
+    draw.enqueue(sim[0]);
+    draw.enqueue(sim[0]);
+
+    for(int i=1;i<sim.size();i++)
+    {
+        if(sim[i] == draw.last())
+            continue;
+        else if((sim[i].getTime() - draw.last().getTime()) >1)
+        {
+            for(int j=0;j<sim[i].getTime() - draw.last().getTime();j++)
+            {
+                if(sim[i].getFloor() > draw.last().getFloor()) //up
+                {
+                    int f = draw.last().getFloor()+1;
+                    if(f==5) f=0;
+                    draw.enqueue(pair(f,draw.last().getTime()+1));
+                }
+                else {
+                    int f = draw.last().getFloor()-1;
+                    if(f==-1) f=4;
+                    draw.enqueue(pair(f,draw.last().getTime()+1));
+                }
+            }
+            draw.enqueue(sim[i]);
+            draw.enqueue(sim[i]);
+        }
+        else
+        {
+            draw.enqueue(sim[i]);
+            draw.enqueue(sim[i]);
+        }
+    }
+
     //just for testing
-    for(int i=0;i<sim.size();i++)
-        qDebug()<<sim[i].getFloor()<<sim[i].getTime();
-    return sim;
+//    for(int i=0;i<sim.size();i++)
+//        qDebug()<<sim[i].getFloor()<<sim[i].getTime();
+//    qDebug()<<" ------------------- ";
+//    for(int i=0;i<draw.size();i++)
+//        qDebug()<<draw[i].getFloor()<<draw[i].getTime();
+    return draw;
 }
 
 
