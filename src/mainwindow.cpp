@@ -23,12 +23,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->reqTable->setHorizontalHeaderItem(2, new QTableWidgetItem("To"));
 
     QSet<Request> set;
-    Request r1(0, 0, 1);
+    Request r1(0, 1, 3);
     Request r2(1 ,2 ,1);
-    Request r3(3 ,1 ,4);
+    Request r3(2 ,1 ,4);
+    Request r4(3 ,3 ,1);
+    Request r5(4 ,1 ,2);
     set.insert(r1);
     set.insert(r2);
     set.insert(r3);
+    set.insert(r4);
+    set.insert(r5);
 
     Elevator e(set);
     e.simulate();
