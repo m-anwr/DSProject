@@ -22,10 +22,17 @@ public:
 private:
     QQueue<Request> upQ;
     QQueue<Request> downQ;
-    QQueue<pair> sim;
+    QQueue<pair> sim,sim1,sim2;
     int floorsNo,time,initialFloor;
+    int realTime,floor;
+    int upServed,downServed;
+    int size;
 
 private:
+    void acceptRequest(int i,int dir);
+    void appendElevatorMovement();
+    void moveUp();
+    void moveDown();
     void enQPair(QQueue<pair> &Q, pair r);
 };
 
