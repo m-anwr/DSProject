@@ -14,10 +14,14 @@ TEMPLATE = app
 SOURCES += src/main.cpp \
            src/mainwindow.cpp \
            src/request.cpp \
-    src/scene.cpp
+           src/elevator.cpp \
+           src/pair.cpp \
+           src/scene.cpp
 
 HEADERS  += src/mainwindow.h \
-            src/request.h \
+    src/request.h \
+    src/elevator.h \
+    src/pair.h \
     src/scene.h
 
 FORMS    += src/mainwindow.ui

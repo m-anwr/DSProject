@@ -14,7 +14,7 @@ Scene::~Scene()
 void Scene::drawBackground(QPainter *painter, const QRectF &rect)
 {
     QBrush blue_brush(Qt::blue);
-    QBrush white_brush(Qt::white);
+    QBrush white_brush(Qt::cyan);
 
     QPen pen(Qt::black);
     QPen penw(Qt::white);

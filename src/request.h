@@ -7,16 +7,20 @@ class Request
 {
 public:
     Request(int time, int from, int to);
-    Request &operator=(const Request &other);
 
     int time() const;
     int from() const;
     int to() const;
+    int getDirection();
+    bool getState();
+    void setState(bool s);
+    Request &operator=(const Request &other);
 
 private:
     int m_time;
     int m_from;
     int m_to;
+    bool state;
 };
 
 inline bool operator==(const Request &lhs, const Request &rhs)

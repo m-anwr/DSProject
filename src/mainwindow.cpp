@@ -4,8 +4,10 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QTextStream>
+#include "ui_mainwindow.h"
 #include <QSet>
 #include <QDebug>
+#include <QGraphicsObject>
 
 #include "ui_mainwindow.h"
 #include "request.h"
@@ -26,6 +28,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setSceneRect(0, 0, 300, 450);
     QTimer::singleShot(200, this, SLOT(showMaximized()));
+    simT = new QTimer(this);
+    simT->setInterval(1000);
+
+    connect(simT, SIGNAL(timeout()),
+            this, SLOT(moveElv()));
 }
 
 MainWindow::~MainWindow()
@@ -105,5 +112,62 @@ void MainWindow::on_startSimBtn_clicked()
     f.close();
 
     // Send values and Request Set to elevator
+    elvShape = new ElevatorShape(elvFloor);
+    scene->addItem(elvShape);
+    Elevator e = Elevator(RequestsIn, elvFloor);
+    simQue = e.simulate();
+    startSimTimer();
+}
 
+void MainWindow::moveElv()
+{
+    if(simQue.empty())
+    {
+        simT->stop();
+        return;
+    }
+    pair p = simQue.head();
+    if(p.getTime() == lastSec)
+    {
+        simQue.dequeue();
+        return;
+    }
+
+    elvShape->move(p.getFloor());
+    simQue.dequeue();
+}
+
+void MainWindow::startSimTimer()
+{
+    simT->start();
+}
+
+// ================================================================
+
+ElevatorShape::ElevatorShape(int intiFloor)
+    : QGraphicsObject(0)
+{
+    setZValue(100);
+    move(intiFloor);
+}
+
+ElevatorShape::~ElevatorShape()
+{
+}
+
+QRectF ElevatorShape::boundingRect() const
+{
+    return QRectF(0,0,50,70);
+}
+
+void ElevatorShape::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    painter->setBrush(QColor(0,255,0,255));
+    painter->drawRect(0,0,50,70);
+}
+
+void ElevatorShape::move(int floor)
+{
+    qreal y= 430 - floor * 100;
+    setPos(125,y);
 }
