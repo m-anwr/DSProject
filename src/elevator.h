@@ -23,6 +23,7 @@ private:
     QQueue<Request> upQ;
     QQueue<Request> downQ;
     QQueue<pair> sim,sim1,sim2;
+    QQueue<pair> draw;
     int floorsNo,time,initialFloor;
     int realTime,floor;
     int upServed,downServed;
@@ -34,6 +35,7 @@ private:
     void moveUp();
     void moveDown();
     void enQPair(QQueue<pair> &Q, pair r);
+    void Draw();
 };
 
 #endif // ELEVATOR_H
